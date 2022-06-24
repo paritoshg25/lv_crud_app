@@ -29,16 +29,11 @@ require __DIR__.'/auth.php';
 // });
 
 Route::get('/list', [StudentController::class, 'index']);
-// Route::get('/add-student',[StudentController::class, 'create']);
-// Route::post('/add-student',[StudentController::class, 'store'])->name('add-student');
-// Route::get('/student-edit/{id}',[StudentController::class, 'edit']);
-// Route::put('/student-update/{id}',[StudentController::class, 'update']);
-Route::get('/student-delete/{id}',[StudentController::class, 'delete']);
-
 
 Route::get('/form',[StudentController::class, 'create_student']);
 Route::post('/form',[StudentController::class, 'store_student'])->name('form');
 Route::get('/form/{id}',[StudentController::class, 'edit_student']);
 Route::put('/form/{id}',[StudentController::class, 'update_student']);
+
 Route::delete('/student-delete/{id}', [StudentController::class, 'delete']);
 
