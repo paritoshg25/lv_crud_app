@@ -18,7 +18,10 @@
                     <x-nav-link :href="url('list')" :active="request()->routeIs('list')">
                         {{ __('Student List') }}
                     </x-nav-link>
-                    <x-nav-link :href="url('add-student')" :active="request()->routeIs('add-student')">
+                    {{-- <x-nav-link :href="url('add-student')" :active="request()->routeIs('add-student')">
+                        {{ __('Add Student') }}
+                    </x-nav-link> --}}
+                    <x-nav-link :href="url('form')" :active="request()->routeIs('form')">
                         {{ __('Add Student') }}
                     </x-nav-link>
                 </div>
