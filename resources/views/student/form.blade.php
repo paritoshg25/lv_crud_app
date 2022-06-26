@@ -17,14 +17,16 @@
             {{-- <x-success-status class="mb-4" :status="session('message')" /> --}}
             <div class="p-4 bg-white overflow-hidden shadow-sm sm:rounded-lg" style="
             padding: 1rem;">
-                <form action="{{ $student->id == null ? url('/form') :  url('/form/'. $student->id) }}" method="post">
+                <form id="form" action="{{ $student->id == null ? url('/form') :  url('/form/'. $student->id) }}" method="post">
                     @csrf
                     @isset($student->id)  {{ method_field('PUT')}} @endisset 
+
                     <!-- Student Name -->
                     <div class="form-field">
                         <x-label for="name" :value="__('Student Name')" />
                         <x-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{ old('name', $student->name) }}" autofocus />
                     </div>
+                    <span class="error_form text-danger" id="name_error_message">Error</span>
                     @if($errors ->has('name'))
                         <p class="text-danger" role="alert">
                             *{{$errors->first('name')}}
@@ -34,8 +36,9 @@
                     <!-- Email Address -->
                     <div class="form-field">
                         <x-label for="email" :value="__('Email')" />
-                        <x-input id="email" class="block mt-1 w-full" type="email" name="email" value="{{$student->email}}" autofocus />
+                        <x-input id="email" class="block mt-1 w-full" type="text" name="email" value="{{ old('email', $student->email) }}" autofocus />
                     </div>
+                    <span class="error_form text-danger" id="email_error_message"></span>
                     @if($errors ->has('email'))
                         <p class="text-danger" role="alert">
                             *{{$errors->first('email')}}
@@ -45,8 +48,9 @@
                     <!-- Phone -->
                     <div class="form-field">
                         <x-label for="phone" :value="__('Phone')" />
-                        <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" value="{{$student->phone}}" maxlength="10" autofocus />
+                        <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" value="{{ old('phone', $student->phone) }}" maxlength="10" autofocus />
                     </div>
+                    <span class="error_form text-danger" id="phone_error_message"></span>
                     @if($errors ->has('phone'))
                         <p class="text-danger" role="alert">
                             *{{$errors->first('phone')}}
@@ -56,8 +60,10 @@
                     <!-- Address -->
                     <div class="form-field">
                         <x-label for="address" :value="__('Address')" />
-                        <x-input id="address" class="block mt-1 w-full" type="text" name="address" value="{{$student->address}}" autofocus />
+                        {{-- <x-input id="address" class="block mt-1 w-full" type="text" name="address" value="{{ old('address', $student->address) }}" autofocus /> --}}
+                        <textarea name="address" id="address" rows="5" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full" autofocus>{{ old('address', $student->address) }}</textarea>
                     </div>
+                    <span class="error_form text-danger" id="address_error_message"></span>
                     @if($errors ->has('address'))
                         <p class="text-danger" role="alert">
                             *{{$errors->first('address')}}
@@ -69,9 +75,10 @@
                     <div class="form-field">
                         <x-label for="gender" :value="__('Gender')" />
                         {{-- <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" autofocus /> --}}
-                        <input type="radio" name="gender" id="male" value="0" {{ ($student->gender == '0')? 'checked': '' }}> &nbsp;Male &nbsp;
-                        <input type="radio" name="gender" id="female" value="1" {{ ($student->gender == '1')? 'checked':'' }}> &nbsp;Female<br>
+                        <input type="radio" name="gender" id="gender" value="0" {{ old('gender' , $student->gender ) == '0' ? 'checked': '' }}> &nbsp;Male &nbsp;
+                        <input type="radio" name="gender" id="gender" value="1" {{ old ('gender', $student->gender ) == '1'? 'checked':'' }}> &nbsp;Female<br>
                     </div>
+                    <span class="error_form text-danger" id="gender_error_message"></span>
                     @if($errors ->has('gender'))
                         <p class="text-danger" role="alert">
                             *{{$errors->first('gender')}}
@@ -83,13 +90,14 @@
                         <x-label for="country" :value="__('Country')" />
                         <select name="country" id="country" style="width:200px; font-size:16px;">
                             <option value="">Select Country</option>
-                            <option value="1" {{ ($student->country == '1')? "selected" : "" }}>India</option>
-                            <option value="2" {{ ($student->country == '2')? "selected" : "" }}>US</option>
-                            <option value="3" {{ ($student->country == '3')? "selected" : "" }}>UK</option>
-                            <option value="4" {{ ($student->country == '4')? "selected" : "" }}>Canada</option>
-                            <option value="5" {{ ($student->country == '5')? "selected" : "" }}>Sri-Lanka</option>
+                            <option value="1" {{ old('country', $student->country ) == '1'? "selected" : "" }}>India</option>
+                            <option value="2" {{ old('country', $student->country ) == '2'? "selected" : "" }}>US</option>
+                            <option value="3" {{ old('country', $student->country ) == '3'? "selected" : "" }}>UK</option>
+                            <option value="4" {{ old('country', $student->country ) == '4'? "selected" : "" }}>Canada</option>
+                            <option value="5" {{ old('country', $student->country ) == '5'? "selected" : "" }}>Sri-Lanka</option>
                         </select><br>
                     </div>
+                    <span class="error_form text-danger" id="country_error_message"></span>
                     @if($errors ->has('country'))
                         <p class="text-danger" role="alert">
                             *{{$errors->first('country')}}
@@ -107,16 +115,21 @@
                         <input type="checkbox" name="hobby[]" value="travelling" id="travelling" @foreach ($hobbies as $hobby) @if($hobby == 'travelling' ) checked @endif @endforeach> Travelling
                         <input type="checkbox" name="hobby[]" value="coding" id="coding" @foreach ($hobbies as $hobby) @if($hobby == 'coding' ) checked @endif @endforeach> Coding<br>
                     </div>
+                    <span class="error_form text-danger" id="hobby_error_message"></span>
                     @if($errors ->has('hobby'))
                         <p class="text-danger" role="alert">
                             *{{$errors->first('hobby')}}
                         </p>
                     @endif
                     
-                    @if(isset($student->id))  <x-button class="ml-4"> {{ __('Update') }}  </x-button>
-                    @else <x-button class="ml-4"> {{ __('Submit') }}  </x-button>
-                    @endif
-                    <x-reset class="ml-4">  {{ __('Reset') }}   </x-reset>
+
+                    <div class="form-field"> 
+                        @if(isset($student->id))  <x-button class="ml-4"> {{ __('Update') }}  </x-button>
+                        @else <x-button class="ml-4"> {{ __('Submit') }}  </x-button>
+                        @endif
+                            <x-reset class="ml-4">  {{ __('Reset') }}   </x-reset>
+                    </div>
+                    
                     
                 </form>
             </div>

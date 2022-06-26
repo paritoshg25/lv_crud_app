@@ -13,6 +13,9 @@ use App\Http\Controllers\StudentController;
 |
 */
 
+
+Route::group(['middleware' => 'prevent-back-history'],function(){
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -28,12 +31,13 @@ require __DIR__.'/auth.php';
 //     Route::post('/add-student', 'store');
 // });
 
-Route::get('/list', [StudentController::class, 'index']);
+Route::get('/list', [StudentController::class, 'index'])->middleware(['auth'])->name('list');
 
-Route::get('/form',[StudentController::class, 'create_student']);
+Route::get('/form',[StudentController::class, 'create_student'])->middleware(['auth'])->name('form');
 Route::post('/form',[StudentController::class, 'store_student'])->name('form');
-Route::get('/form/{id}',[StudentController::class, 'edit_student']);
+Route::get('/form/{id}',[StudentController::class, 'edit_student'])->middleware(['auth'])->name('form');
 Route::put('/form/{id}',[StudentController::class, 'update_student']);
 
-Route::delete('/student-delete/{id}', [StudentController::class, 'delete']);
+Route::delete('/student-delete/{id}', [StudentController::class, 'delete_student']);
 
+});

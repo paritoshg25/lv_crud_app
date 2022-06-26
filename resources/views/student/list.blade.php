@@ -9,7 +9,7 @@
 
         
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <x-success-status class="mb-4" :status="session('message')" />
+            {{-- <x-success-status class="mb-4" :status="session('message')" /> --}}
             <div class="p-4 bg-white overflow-hidden shadow-sm sm:rounded-lg" style="
             padding: 1rem;">
                  <table class="table">

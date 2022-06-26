@@ -23,6 +23,8 @@ class CreateStudentsTable extends Migration
             $table->string('country');
             $table->string('hobby');
             $table->timestamps();
+            // $table->timestamp('created_time')->useCurrent();
+            // $table->timestamp('updated_time')->nullable()->useCurrentOnUpdate();
         });
     }
 

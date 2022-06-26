@@ -18,9 +18,6 @@ class StudentController extends Controller
         // $students = DB::select('select * from students');
         return view('student.list', ['students' => $students]);
     }
-// ///////////////////////////////////////////////////////////////////////////////////////
-
-    
 
     public function create_student()
     {
@@ -52,7 +49,11 @@ class StudentController extends Controller
             'hobby' => implode(",",$data['hobby']),
         ]);
 
-        return redirect('/list')->with('message', 'Student Added Succesfully');
+        $notification = array(
+            'message' => 'Student Added Succesfully',
+            'alert-type' => 'success'
+        );
+        return redirect('/list')->with($notification);
     }
 
     public function edit_student($id)
@@ -86,14 +87,24 @@ class StudentController extends Controller
 
         $student->save();
 
-        return redirect('/list')->with('message', 'Student Updated Succesfully');
+        $notification = array(
+            'message' => 'Student Updated Succesfully',
+            'alert-type' => 'info'
+        );
+
+        return redirect('/list')->with($notification);
     }
 
-    public function delete($id){
+    public function delete_student($id){
         $student = Student::where('id', $id)->first();
 
         $student->delete();
 
-        return redirect('/list')->with('message', 'Student Deleted Succesfully');
+        $notification = array(
+            'message' => 'Student Deleted Succesfully',
+            'alert-type' => 'info'
+        );
+
+        return redirect('/list')->with($notification);
     }
 }
