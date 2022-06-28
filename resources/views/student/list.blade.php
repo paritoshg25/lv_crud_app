@@ -42,7 +42,7 @@
                                 <td>{{ ($student->gender == '0')? "Male" : "Female" }}</td>
                                 <td>{{ $countries[$student->country] }}</td>
                                 <td>{{ $student->hobby }}</td>
-                                <td><a href="form/{{ $student->id }}"><button type="submit" class="btn btn-primary">Edit</button></a></td>
+                                <td><a href="student-form/{{ $student->id }}"><button type="submit" class="btn btn-primary">Edit</button></a></td>
                                 {{-- <td><a href="#"><button type="button" class="btn btn-danger">Danger</button></a></td> --}}
                                 <td> 
                                     <form action="/student-delete/{{ $student->id }}" method="post">

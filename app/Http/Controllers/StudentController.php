@@ -2,29 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\StudentFormRequest;
 use App\Models\Student;
-// use Illuminate\App\Http\Request;
 use Illuminate\App\Http\Models;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-  
+    
 
+
+    // Function to show student list
     public function index(){
         $students = Student::orderBy('created_at', 'DESC')->get();
-        // $students = DB::select('select * from students');
         return view('student.list', ['students' => $students]);
     }
 
-    public function create_student()
+    
+    // Function to create new student
+    public function createStudent()
     {
         return view('student.form', ['student' => new Student()]);
     }
+    
 
-    public function store_student(Request $request)
+    // Function to store new student
+    public function storeStudent(Request $request)
     {
         $request->validate([
             'name' => 'required|max:255',
@@ -53,16 +55,20 @@ class StudentController extends Controller
             'message' => 'Student Added Succesfully',
             'alert-type' => 'success'
         );
-        return redirect('/list')->with($notification);
+        return redirect('/student-list')->with($notification);
     }
 
-    public function edit_student($id)
+
+    // Function to edit student details
+    public function editStudent($id)
     {
         $student = Student::where('id', $id)->first();
         return view('student.form', ['student' => $student ]);
     }
 
-    public function update_student(Request $request, $id){
+
+    // Function to update student details
+    public function updateStudent(Request $request, $id){
         
         $request->validate([
             'name' => 'required|max:255',
@@ -89,22 +95,23 @@ class StudentController extends Controller
 
         $notification = array(
             'message' => 'Student Updated Succesfully',
-            'alert-type' => 'info'
+            'alert-type' => 'success'
         );
 
-        return redirect('/list')->with($notification);
+        return redirect('/student-list')->with($notification);
     }
 
-    public function delete_student($id){
+    // Function to delete student
+    public function deleteStudent($id){
         $student = Student::where('id', $id)->first();
 
         $student->delete();
 
         $notification = array(
             'message' => 'Student Deleted Succesfully',
-            'alert-type' => 'info'
+            'alert-type' => 'success'
         );
 
-        return redirect('/list')->with($notification);
+        return redirect('/student-list')->with($notification);
     }
 }

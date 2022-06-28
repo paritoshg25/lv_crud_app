@@ -16,28 +16,33 @@ use App\Http\Controllers\StudentController;
 
 Route::group(['middleware' => 'prevent-back-history'],function(){
 
-Route::get('/', function () {
-    return view('welcome');
-});
+    Route::get('/', function () {
+        return view('welcome'); // Route for welcome
+    });
+    require __DIR__.'/auth.php';
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+    Route::group(['middleware' => 'auth'], function(){
 
-require __DIR__.'/auth.php';
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->name('dashboard'); // Route to Dashboard
 
-// Route::controller(App\Http\Controllers\StudentController::class)->group(function () {
-//     Route::get('/add-student', 'create');
-//     Route::post('/add-student', 'store');
-// });
 
-Route::get('/list', [StudentController::class, 'index'])->middleware(['auth'])->name('list');
 
-Route::get('/form',[StudentController::class, 'create_student'])->middleware(['auth'])->name('form');
-Route::post('/form',[StudentController::class, 'store_student'])->name('form');
-Route::get('/form/{id}',[StudentController::class, 'edit_student'])->middleware(['auth'])->name('form');
-Route::put('/form/{id}',[StudentController::class, 'update_student']);
+        // Route::controller(App\Http\Controllers\StudentController::class)->group(function () {
+        //     Route::get('/add-student', 'create');
+        //     Route::post('/add-student', 'store');
+        // });
 
-Route::delete('/student-delete/{id}', [StudentController::class, 'delete_student'])->middleware(['auth'])->name('delete');
+        Route::get('/student-list', [StudentController::class, 'index'])->name('student-list'); //Route for show student details
 
-});
+        Route::get('/student-form',[StudentController::class, 'createStudent'])->name('form-create'); //Route for add student details
+        Route::post('/student-form',[StudentController::class, 'storeStudent'])->name('form-store'); //Route for store student details
+        Route::get('/student-form/{id}',[StudentController::class, 'editStudent'])->name('form-edit'); //Route for edit student details
+        Route::put('/student-form/{id}',[StudentController::class, 'updateStudent']); // Route for update student details
+
+        Route::delete('/student-delete/{id}', [StudentController::class, 'deleteStudent'])->name('delete'); // Route for delete student
+    
+    }); //Middleware Auth END 
+
+}); //Middleware prevent-back-history END 
