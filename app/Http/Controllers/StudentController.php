@@ -3,13 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use Exception;
 use Illuminate\App\Http\Models;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    
+    // Function to show student list using API
+    public function getApi(){
+        try{
+            $students = Student::all();
 
+            if($students){
+                return response()->json([
+                    'status' => '1',
+                    'message' => 'Data sent Successfully.',
+                    'students' => $students], 200);
+                }else{
+                    return response()->json([
+                        'status' => '0',
+                        'message' => 'Error Occured.',
+                        'students' => $students], 200);
+                }
+        }catch(Exception $e){
+            return $e->getMessage();
+        }
+       
+    }
 
     // Function to show student list
     public function index(){
@@ -51,11 +71,21 @@ class StudentController extends Controller
             'hobby' => implode(",",$data['hobby']),
         ]);
 
-        $notification = array(
-            'message' => 'Student Added Succesfully',
-            'alert-type' => 'success'
-        );
-        return redirect('/student-list')->with($notification);
+        if($student){
+
+            $notification = array(
+                'message' => 'Student Added Succesfully',
+                'alert-type' => 'success'
+            );
+            return redirect('/student-list')->with($notification);
+        }else{
+            $notification = array(
+                'message' => 'Error while adding the data.',
+                'alert-type' => 'error'
+            );
+            return redirect('/student-list')->with($notification);
+        }
+
     }
 
 
@@ -91,14 +121,23 @@ class StudentController extends Controller
         $student->country = $request->country;
         $student->hobby = implode("," ,$request->hobby);
 
-        $student->save();
+        if($student->save()){
+            $notification = array(
+                'message' => 'Student Updated Succesfully',
+                'alert-type' => 'success'
+            );
+    
+            return redirect('/student-list')->with($notification);
+        }else{
+            $notification = array(
+                'message' => 'Error while updating data.',
+                'alert-type' => 'error'
+            );
+    
+            return redirect('/student-list')->with($notification);
+        }
 
-        $notification = array(
-            'message' => 'Student Updated Succesfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect('/student-list')->with($notification);
+       
     }
 
     // Function to delete student

@@ -27,8 +27,6 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
             return view('dashboard');
         })->name('dashboard'); // Route to Dashboard
 
-
-
         // Route::controller(App\Http\Controllers\StudentController::class)->group(function () {
         //     Route::get('/add-student', 'create');
         //     Route::post('/add-student', 'store');
