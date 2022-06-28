@@ -38,6 +38,7 @@ class StudentResourceController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * 
      */
     public function index()
     {
@@ -60,6 +61,20 @@ class StudentResourceController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * 
+     * @author Paritosh Gupta
+     * created at : 28-06-2022
+     * modified at : --
+     * 
+     * Values details:
+     *      'name'     : string | required
+     *      'email'    : string | required
+     *      'phone'    : numbers | required | min:10
+     *      'address'  : string | required
+     *      'gender'   : enum('0' OR '1') | required
+     *      'name'     : string | required
+     *      'country'  : numbers[1-5] | required
+     *      'hobby'    : numbers[1-5] | required
      */
     public function store(Request $request)
     {
@@ -67,7 +82,6 @@ class StudentResourceController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-            'country' => 'required',
             'address' => 'required',
             'gender' => 'required',
             'country' => 'required',
