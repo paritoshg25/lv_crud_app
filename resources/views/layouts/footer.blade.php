@@ -14,7 +14,6 @@
 <script src="{{ asset('js/JSvalidation.js') }}" defer></script>  <!-- Scripts for JS validation -->
 
 <script>
-    // toastr.success('Have fun storming the castle!', 'Miracle Max Says')
     @if(Session::has('message'))
     var type = "{{ Session::get('alert-type', 'info') }}";
     switch(type){
@@ -46,8 +45,6 @@
             toastr.error("{{ Session::get('message') }}");
             break;
     }
-
-    
   @endif
 
 </script>

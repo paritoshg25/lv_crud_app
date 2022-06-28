@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentResourceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Route for Student Listing Api
-Route::get('studentApi',[StudentController::class, 'getApi']);
+Route::get('studentApi',[StudentResourceController::class, 'getApi']);

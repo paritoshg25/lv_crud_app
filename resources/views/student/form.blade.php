@@ -17,7 +17,7 @@
             {{-- <x-success-status class="mb-4" :status="session('message')" /> --}}
             <div class="p-4 bg-white overflow-hidden shadow-sm sm:rounded-lg" style="
             padding: 1rem;">
-                <form id="form" action="{{ $student->id == null ? url('/student-form') :  url('/student-form/'. $student->id) }}" method="post">
+                <form id="form" action="{{ $student->id == null ? route('students.store') :  route('students.update', $student->id) }}" method="post">
                     @csrf
                     @isset($student->id)  {{ method_field('PUT')}} @endisset 
 

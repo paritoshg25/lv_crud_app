@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Exception;
-use Illuminate\App\Http\Models;
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class StudentResourceController extends Controller
 {
-    // Function to show student list using API
+    /**
+     * Api to get data from database.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getApi(){
         try{
             $students = Student::all();
@@ -31,22 +34,34 @@ class StudentController extends Controller
        
     }
 
-    // Function to show student list
-    public function index(){
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
         $students = Student::orderBy('created_at', 'DESC')->get();
         return view('student.list', ['students' => $students]);
     }
 
-    
-    // Function to create new student
-    public function createStudent()
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
         return view('student.form', ['student' => new Student()]);
     }
-    
 
-    // Function to store new student
-    public function storeStudent(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|max:255',
@@ -77,29 +92,49 @@ class StudentController extends Controller
                 'message' => 'Student Added Succesfully',
                 'alert-type' => 'success'
             );
-            return redirect('/student-list')->with($notification);
             return redirect()->route('students.index')->with($notification);
         }else{
             $notification = array(
                 'message' => 'Error while adding the data.',
                 'alert-type' => 'error'
             );
-            return redirect('/student-list')->with($notification);
+            return redirect()->route('students.index')->with($notification);
         }
-
     }
 
-
-    // Function to edit student details
-    public function editStudent($id)
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Student  $student
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
         $student = Student::where('id', $id)->first();
         return view('student.form', ['student' => $student ]);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Student  $student
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $student = Student::where('id', $id)->first();
+        return view('student.form', ['student' => $student ]);
+    }
 
-    // Function to update student details
-    public function updateStudent(Request $request, $id){
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Student  $student
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
         
         $request->validate([
             'name' => 'required|max:255',
@@ -128,30 +163,41 @@ class StudentController extends Controller
                 'alert-type' => 'success'
             );
     
-            return redirect('/student-list')->with($notification);
+            return redirect()->route('students.index')->with($notification);
         }else{
             $notification = array(
                 'message' => 'Error while updating data.',
                 'alert-type' => 'error'
             );
     
-            return redirect('/student-list')->with($notification);
+            return redirect()->route('students.index')->with($notification);
         }
-
-       
     }
 
-    // Function to delete student
-    public function deleteStudent($id){
-        $student = Student::where('id', $id)->first();
-
-        $student->delete();
-
-        $notification = array(
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Student  $student
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $student = Student::find($id);
+        if($student->delete()){
+             $notification = array(
             'message' => 'Student Deleted Succesfully',
             'alert-type' => 'success'
         );
+        return redirect()->route('students.index')->with($notification);
 
-        return redirect('/student-list')->with($notification);
+        }else{
+                $notification = array(
+               'message' => 'Error while deleting the data.',
+               'alert-type' => 'error'
+                );
+   
+        //    return redirect('/student-list')->with($notification);
+           return redirect()->route('students.index')->with($notification);
+        }
     }
 }
