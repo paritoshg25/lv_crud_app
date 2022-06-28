@@ -29,7 +29,7 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
             return view('dashboard');
         })->name('dashboard'); // Route to Dashboard
             
-        Route::resource('students', StudentResourceController::class);
+        Route::resource('students', StudentResourceController::class); // Route for all CRUD Operations
         
     }); //Middleware Auth END 
 

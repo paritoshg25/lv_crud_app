@@ -42,17 +42,17 @@ class StudentResourceController extends Controller
     public function index()
     {
         $students = Student::orderBy('created_at', 'DESC')->get();
-        return view('student.list', ['students' => $students]);
+        return view('student.listing', ['students' => $students]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the student-form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('student.form', ['student' => new Student()]);
+        return view('student.student-form', ['student' => new Student()]);
     }
 
     /**
@@ -111,11 +111,11 @@ class StudentResourceController extends Controller
     public function show($id)
     {
         $student = Student::where('id', $id)->first();
-        return view('student.form', ['student' => $student ]);
+        return view('student.student-form', ['student' => $student ]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the student-form for editing the specified resource.
      *
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
@@ -123,7 +123,7 @@ class StudentResourceController extends Controller
     public function edit($id)
     {
         $student = Student::where('id', $id)->first();
-        return view('student.form', ['student' => $student ]);
+        return view('student.student-form', ['student' => $student ]);
     }
 
     /**
