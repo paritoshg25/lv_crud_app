@@ -1462,3 +1462,14 @@ My Custom CSS
 .form-field{
   margin-top: 1rem;
 }
+
+td img {
+  float: left;
+  width:  140px;
+  height: 84px;
+  object-fit: cover;
+}
+
+.error{
+  color: #dc3545;
+}

@@ -26,7 +26,7 @@
                         <x-label for="profile_image" :value="__('Profile Image')" />
                         {{-- <x-input id="profile_image" class="block mt-1 w-full" type="text" name="student-image" value="{{ old('profile_image', $student->profile_image) }}" autofocus /> --}}
                         {{-- <input type="file" name="profile_image" id="profile_image" class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"> --}}
-                        <input name="profile_image" id="profile_image" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-900 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file">
+                        <input name="profile_image" id="profile_image" value="{{ old('profile_image', $student->profile_image) }}" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-900 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file">
                         </div>
                         
                     <span class="error_form text-danger" id="profile_image_error_message"></span>

@@ -1,3 +1,18 @@
+$("#form").validate({
+    rules:{
+        profile_image: {
+            required: true,
+            extension: "jpg|jpeg|png|ico|bmp"
+        }
+    },
+    message: {
+        profile_image: {
+        required: "Please upload file.",
+        extension: "Please upload file in these format only (jpg, jpeg, png, ico, bmp)."
+        }
+    }
+});
+
 $(document).ready(function () {
     $("#profile_image_error_message").hide();
     $("#name_error_message").hide();
@@ -43,10 +58,10 @@ $(document).ready(function () {
     });
 
 
-
     function check_profile_image() {
         // var pattern = /^[a-zA-Z ]*$/;
         var image = $("#profile_image").val();
+        console.log(image);
         // if (pattern.test(name) && name !== '') {
         //     $("#name_error_message").hide();
         // } else {
@@ -61,13 +76,16 @@ $(document).ready(function () {
         //     error_name = true;
         // }
 
-        if(image !== null){
-            $("#name_error_message").hide();
-        }else{
-            $("#name_error_message").html("*This field is required.");
-            $("#name_error_message").show();
-            error_profile_image = true;
-        }
+        // if(image !== null){
+        //     $("#name_error_message").hide();
+        // }else{
+        //     $("#name_error_message").html("*This field is required.");
+        //     $("#name_error_message").show();
+        //     error_profile_image = true;
+        // }
+
+    
+
     }
 
     function check_name() {

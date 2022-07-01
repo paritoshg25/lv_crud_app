@@ -36,7 +36,7 @@
                         @foreach($students as $student)
                             <tr>
                                 <th scope="row">{{$i++}}</th>
-                                <td><img src="{{ asset('uploads/students/'.$student->profile_image)}}" alt="profile image" width="100px"></td>
+                                <td><img src="{{ asset('uploads/students/'.$student->profile_image)}}" alt="profile image"></td>
                                 <td>{{ $student->name }}</td>
                                 <td>{{ $student->email }}</td>
                                 <td>{{ $student->phone }}</td>
