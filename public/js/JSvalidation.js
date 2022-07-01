@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $("#profile_image_error_message").hide();
     $("#name_error_message").hide();
     $("#email_error_message").hide();
     $("#phone_error_message").hide();
@@ -7,6 +8,7 @@ $(document).ready(function () {
     $("#hobby_error_message").hide();
     $("#country_error_message").hide();
 
+    var error_profile_image = false;
     var error_name = false;
     var error_email = false;
     var error_phone = false;
@@ -15,6 +17,9 @@ $(document).ready(function () {
     var error_country = false;
     var error_hobby = false;
 
+    $('#profile_image').keyup(function () {
+        check_profile_image();
+    });
     $('#name').keyup(function () {
         check_name();
     });
@@ -38,6 +43,32 @@ $(document).ready(function () {
     });
 
 
+
+    function check_profile_image() {
+        // var pattern = /^[a-zA-Z ]*$/;
+        var image = $("#profile_image").val();
+        // if (pattern.test(name) && name !== '') {
+        //     $("#name_error_message").hide();
+        // } else {
+        //     if (name == '') {
+        //         $("#name_error_message").html("*First Name is Required");
+        //     }
+        //     else if (!pattern.test(name)) {
+        //         $("#name_error_message").html("*Invalid First Name");
+
+        //     }
+        //     $("#name_error_message").show();
+        //     error_name = true;
+        // }
+
+        if(image !== null){
+            $("#name_error_message").hide();
+        }else{
+            $("#name_error_message").html("*This field is required.");
+            $("#name_error_message").show();
+            error_profile_image = true;
+        }
+    }
 
     function check_name() {
         var pattern = /^[a-zA-Z ]*$/;
@@ -149,6 +180,7 @@ $(document).ready(function () {
 
 
     $("#form").submit(function () {
+        error_profile_image = false;
         error_name = false;
         error_email = false;
         error_phone = false;
@@ -157,7 +189,7 @@ $(document).ready(function () {
         error_country = false;
         error_hobby = false;
 
-
+        check_profile_image();
         check_name();
         check_email();
         check_phone()
@@ -166,7 +198,7 @@ $(document).ready(function () {
         check_hobby();
         check_country();
 
-        if (error_name === false && error_email === false && error_phone === false && error_address === false && error_gender === false && error_hobby === false && error_country === false) {
+        if (error_profile_image === false && error_name === false && error_email === false && error_phone === false && error_address === false && error_gender === false && error_hobby === false && error_country === false) {
             // alert("helo");
             // return true;
             // $("#form").submit();

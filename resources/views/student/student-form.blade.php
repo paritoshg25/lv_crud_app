@@ -17,16 +17,31 @@
             {{-- <x-success-status class="mb-4" :status="session('message')" /> --}}
             <div class="p-4 bg-white overflow-hidden shadow-sm sm:rounded-lg" style="
             padding: 1rem;">
-                <form id="form" action="{{ $student->id == null ? route('students.store') :  route('students.update', $student->id) }}" method="post">
+                <form id="form" action="{{ $student->id == null ? route('students.store') :  route('students.update', $student->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @isset($student->id)  {{ method_field('PUT')}} @endisset 
+                    
+                    <!-- Student Image -->
+                    <div class="form-field">
+                        <x-label for="profile_image" :value="__('Profile Image')" />
+                        {{-- <x-input id="profile_image" class="block mt-1 w-full" type="text" name="student-image" value="{{ old('profile_image', $student->profile_image) }}" autofocus /> --}}
+                        {{-- <input type="file" name="profile_image" id="profile_image" class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"> --}}
+                        <input name="profile_image" id="profile_image" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-900 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file">
+                        </div>
+                        
+                    <span class="error_form text-danger" id="profile_image_error_message"></span>
+                    @if($errors ->has('profile_image'))
+                        <p class="text-danger" role="alert">
+                            *{{$errors->first('profile_image')}}
+                        </p>
+                    @endif
 
                     <!-- Student Name -->
                     <div class="form-field">
                         <x-label for="name" :value="__('Student Name')" />
                         <x-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{ old('name', $student->name) }}" autofocus />
                     </div>
-                    <span class="error_form text-danger" id="name_error_message">Error</span>
+                    <span class="error_form text-danger" id="name_error_message"></span>
                     @if($errors ->has('name'))
                         <p class="text-danger" role="alert">
                             *{{$errors->first('name')}}

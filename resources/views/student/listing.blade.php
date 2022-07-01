@@ -8,7 +8,7 @@
     <div class="py-12">
 
         
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             {{-- <x-success-status class="mb-4" :status="session('message')" /> --}}
             <div class="p-4 bg-white overflow-hidden shadow-sm sm:rounded-lg" style="
             padding: 1rem;">
@@ -16,6 +16,7 @@
                     <thead>
                       <tr>
                         <th scope="col">Sr. No.</th>
+                        <th scope="col">Profile Image</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Phone</th>
@@ -35,6 +36,7 @@
                         @foreach($students as $student)
                             <tr>
                                 <th scope="row">{{$i++}}</th>
+                                <td><img src="{{ asset('uploads/students/'.$student->profile_image)}}" alt="profile image" width="100px"></td>
                                 <td>{{ $student->name }}</td>
                                 <td>{{ $student->email }}</td>
                                 <td>{{ $student->phone }}</td>

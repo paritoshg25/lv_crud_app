@@ -79,6 +79,7 @@ class StudentResourceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name' => 'required|max:255',
             'email' => 'required|email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
@@ -89,8 +90,23 @@ class StudentResourceController extends Controller
         ]);
 
         $data = $request;
+
         // $student = Student::create($request->all());
+        if($request->hasfile('profile_image')) /** Check and store profile image **/
+        { 
+            $file = $request->file('profile_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extension;
+            $file->move('uploads/students/', $filename);
+            $imagefile = $filename;
+            // echo $imagefile;
+            
+            // dd($request->all());
+            // die();
+        }
+
         $student = Student::create([
+            'profile_image' => $filename,
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
@@ -151,6 +167,7 @@ class StudentResourceController extends Controller
     {
         
         $request->validate([
+            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name' => 'required|max:255',
             'email' => 'required|email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
@@ -163,6 +180,15 @@ class StudentResourceController extends Controller
 
         $student = Student::where('id', $id)->first();
 
+        
+        if($request->hasfile('profile_image')) /** Check and store profile image **/
+        { 
+            $file = $request->file('profile_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extension;
+            $file->move('uploads/students/', $filename);
+            $student->profile_image = $filename;
+        }
         $student->name = $request->name;
         $student->email = $request->email;
         $student->phone = $request->phone;
